@@ -1,0 +1,12 @@
+---
+// import { AuthLayout } from "../layouts/AuthLayout";
+import Layout from "../layouts/Layout.astro";
+import { RegisterCard } from "../components/login/RegisterCard";
+import AuthLayout from "../layouts/AuthLayout.astro";
+---
+
+<Layout>
+  <AuthLayout>
+    <RegisterCard client:load />
+  </AuthLayout>
+</Layout>

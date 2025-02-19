@@ -1,0 +1,29 @@
+---
+export const prerender = false;
+import Layout from "../../layouts/Layout.astro";
+import { Devices } from "../../components/dashboard/Devices";
+import DashboardLayout from "../../layouts/dashboardLayout.astro";
+import { PUBLIC_SERVER } from "../../utils/environment";
+
+const token = Astro.cookies.get("access_token");
+if (!token) return Astro.redirect("/");
+
+const devices = [];
+const url = `${PUBLIC_SERVER}/devices`;
+const res = await fetch(url, {
+  method: "GET",
+  headers: {
+    "content-type": "application/json",
+    Authorization: `Bearer ${token.value}`,
+  },
+});
+const data = await res.json();
+console.log(data);
+if (data.error) return Astro.redirect("/");
+---
+
+<Layout>
+  <DashboardLayout>
+    <Devices client:only />
+  </DashboardLayout>
+</Layout>

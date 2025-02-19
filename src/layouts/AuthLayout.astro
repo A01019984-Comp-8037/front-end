@@ -1,0 +1,10 @@
+---
+import { Alert } from "../components/shared/Alert";
+---
+
+<div class="w-full h-full bg-slate-200 flex justify-center items-center">
+  <div class="w-96">
+    <slot />
+  </div>
+</div>
+<Alert client:load />

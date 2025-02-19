@@ -1,0 +1,64 @@
+---
+import { Header } from "../components/shared/Header";
+
+const items = [
+  {
+    item: "Devices",
+    link: "/",
+  },
+  {
+    item: "Removal",
+    link: "/",
+  },
+  {
+    item: "Settings",
+    link: "/",
+  },
+];
+
+// try {
+//   const url = `${import.meta.env.PUBLIC_SERVER}/auth/check-user`;
+//   const token = Astro.cookies.get("access_token");
+//   if (!token) {
+//     document.location.href = "/";
+//   }
+//   const res = await fetch(url, {
+//     method: "GET",
+//     headers: {
+//       "content-type": "application/json",
+//       Authorization: `Bearer ${Astro.cookies.get("access_token")?.value}`,
+//     },
+//   });
+//   const data = await res.json();
+//   console.log(data);
+// } catch (e) {
+//   console.error(e);
+// }
+---
+
+<div class="w-full h-full overflow-y-hidden bg-slate-200 relative">
+  <Header />
+  <div class="drawer lg:drawer-open">
+    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+    <div
+      class="drawer-content flex flex-col items-center justify-normal overflow-y-scroll"
+    >
+      <slot />
+      <label class="btn btn-primary drawer-button lg:hidden">
+        Open drawer
+      </label>
+    </div>
+    <div class="drawer-side">
+      <label aria-label="close sidebar" class="drawer-overlay"></label>
+      <ul class="menu bg-base-200 text-base-content min-h-full w-36 p-4">
+        {
+          items.map((val) => (
+            <li class="font-semibold">
+              <a href={val.link}>{val.item}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>
