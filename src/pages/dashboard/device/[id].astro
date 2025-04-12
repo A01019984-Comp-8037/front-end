@@ -1,6 +1,34 @@
 ---
 export const prerender = false;
-const test = Astro.params.id;
+import { Device } from "../../../components/device/Device";
+import DashboardLayout from "../../../layouts/dashboardLayout.astro";
+import { PUBLIC_SERVER } from "../../../utils/environment";
+import { DeviceHeader } from "../../../components/shared/DeviceHeader";
+
+const deviceId = Astro.params.id;
+
+if (!deviceId) Astro.redirect("/dashboard");
+const token = Astro.cookies.get("access_token");
+if (!token) return Astro.redirect("/");
+
+const url = `${PUBLIC_SERVER}/devices?device=${deviceId}`;
+const res = await fetch(url, {
+  method: "GET",
+  headers: {
+    "content-type": "application/json",
+    Authorization: `Bearer ${token.value}`,
+  },
+});
+const data = await res.json();
+console.log(data);
+if (data.error) return Astro.redirect("/");
 ---
 
-<h1>{test}</h1>
+<DashboardLayout>
+  <DeviceHeader id={deviceId as string} client:load />
+  <Device
+    deviceId={deviceId as string}
+    name={data.device.displayname}
+    client:load
+  />
+</DashboardLayout>

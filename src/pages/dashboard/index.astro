@@ -4,11 +4,12 @@ import Layout from "../../layouts/Layout.astro";
 import { Devices } from "../../components/dashboard/Devices";
 import DashboardLayout from "../../layouts/dashboardLayout.astro";
 import { PUBLIC_SERVER } from "../../utils/environment";
+import { Header } from "../../components/shared/Header";
 
 const token = Astro.cookies.get("access_token");
 if (!token) return Astro.redirect("/");
 
-const devices = [];
+let devices = [];
 const url = `${PUBLIC_SERVER}/devices`;
 const res = await fetch(url, {
   method: "GET",
@@ -19,11 +20,13 @@ const res = await fetch(url, {
 });
 const data = await res.json();
 console.log(data);
+devices = data.devices;
 if (data.error) return Astro.redirect("/");
 ---
 
 <Layout>
   <DashboardLayout>
-    <Devices client:only />
+    <Header client:load />
+    <Devices deviceList={devices} client:load />
   </DashboardLayout>
 </Layout>

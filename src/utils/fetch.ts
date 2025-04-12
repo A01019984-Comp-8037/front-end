@@ -1,4 +1,3 @@
-import type { AstroCookies } from "astro";
 import { getCookie } from "./cookies";
 
 export const header = {

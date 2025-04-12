@@ -3,8 +3,6 @@ import { alertStore } from "../../store/AlertStore";
 
 export function Alert() {
   const alertInfo = useStore(alertStore);
-
-  console.log(alertInfo);
   const position = alertInfo.display ? "opacity-100" : "opacity-0";
 
   return (

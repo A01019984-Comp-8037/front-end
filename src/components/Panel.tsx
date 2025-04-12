@@ -13,7 +13,7 @@ export function Panel({ children }: Panel) {
 
   return (
     <div
-      className={`bg-base-100 card card-compact shadow-xl w-full h-fit transition ${opacity}`}
+      className={`bg-base-100 card card-compact shadow-xl w-full h-full transition ${opacity}`}
     >
       {children}
     </div>

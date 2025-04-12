@@ -7,7 +7,7 @@ interface alert {
 }
 
 export const alertStore = atom<alert>({
-  msg: "yes haha",
+  msg: "",
   type: "",
   display: false,
 });
