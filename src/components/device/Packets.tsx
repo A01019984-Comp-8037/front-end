@@ -5,6 +5,7 @@ import { getCookie } from "../../utils/cookies";
 import { Linechart } from "./lineGraph";
 import { barChart, protocolGraph } from "../../utils/graphFunctions";
 import { BarGraph } from "./BarGraph";
+import { PacketView } from "./PacketView";
 
 interface Props {
   deviceId: string;
@@ -39,12 +40,11 @@ export function Packets({ deviceId, connected }: Props) {
     init: false,
   });
   const [packets, setPackets] = useState<packetData[]>([]);
-  console.log(packets);
 
   useEffect(() => {
     socket.on("client:packet-send", (res) => {
       setPackets((prev) => {
-        let limit = 150000;
+        let limit = 500000;
         let nList = [...prev, ...res];
         if (nList.length > limit) {
           nList.splice(0, nList.length - limit);
@@ -56,7 +56,6 @@ export function Packets({ deviceId, connected }: Props) {
   }, []);
 
   useEffect(() => {
-    console.log("this should run once");
     if (connected) {
       socket.emit("client:init-packets", {
         token: getCookie("access_token"),
@@ -81,51 +80,55 @@ export function Packets({ deviceId, connected }: Props) {
   }
 
   return (
-    <div className="mb-4">
-      <Panel>
-        <div className="m-5 pb-11">
-          <div className="flex flex-row">
-            <h1 className="text-2xl my-1 flex-1">Packets ({packets.length})</h1>
-            <div>
-              <details className="dropdown dropdown-end">
-                <summary className="btn m-1">{type}</summary>
-                <ul className="z-10 menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                  <li>
-                    <a onClick={() => setType("Protocol")}>TCP/UDP</a>
-                  </li>
-                  <li>
-                    <a onClick={() => setType("Source IP")}>Source IP</a>
-                  </li>
-                  <li>
-                    <a onClick={() => setType("Destination IP")}>
-                      Destination IP
-                    </a>
-                  </li>
-                  <li>
-                    <a onClick={() => setType("Source Socket")}>
-                      Source Socket
-                    </a>
-                  </li>
-                  <li>
-                    <a onClick={() => setType("Destination Socket")}>
-                      Destination Socket
-                    </a>
-                  </li>
-                </ul>
-              </details>
-            </div>
-          </div>
-          <div className="max-h-[60vh] flex justify-center">{chart}</div>
-          <div className="mt-3 max-h-32 overflow-y-scroll">
-            {packets.map((val, key) => (
-              <div key={key} className="text-center">
-                {val.src_ip}:{val.src_port} {" -> "} {val.dest_ip}:
-                {val.dest_port}
+    <>
+      <div className="mb-4">
+        <Panel>
+          <div className="m-5 pb-11">
+            <div className="flex flex-row">
+              <h1 className="text-2xl my-1 flex-1">
+                Packets ({packets.length})
+              </h1>
+              <div>
+                <details className="dropdown dropdown-end">
+                  <summary className="btn m-1">{type}</summary>
+                  <ul className="z-10 menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    <li>
+                      <a onClick={() => setType("Protocol")}>TCP/UDP</a>
+                    </li>
+                    <li>
+                      <a onClick={() => setType("Source IP")}>Source IP</a>
+                    </li>
+                    <li>
+                      <a onClick={() => setType("Destination IP")}>
+                        Destination IP
+                      </a>
+                    </li>
+                    <li>
+                      <a onClick={() => setType("Source Socket")}>
+                        Source Socket
+                      </a>
+                    </li>
+                    <li>
+                      <a onClick={() => setType("Destination Socket")}>
+                        Destination Socket
+                      </a>
+                    </li>
+                  </ul>
+                </details>
               </div>
-            ))}
+            </div>
+            <div className="max-h-[60vh] flex justify-center">{chart}</div>
           </div>
-        </div>
-      </Panel>
-    </div>
+        </Panel>
+      </div>
+      <div className="mb-5">
+        <Panel>
+          <div className="p-5">
+            <h1 className="text-2xl my-1 flex-1">List ({packets.length})</h1>
+            <PacketView packets={packets} />
+          </div>
+        </Panel>
+      </div>
+    </>
   );
 }

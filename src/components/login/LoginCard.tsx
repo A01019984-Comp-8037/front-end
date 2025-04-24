@@ -29,7 +29,7 @@ export function LoginCard() {
         secure: true,
       });
       document.cookie = cookieString;
-      document.location.href = "/dashboard";
+      window.location.href = "/dashboard";
     } catch (e) {
       console.log("login failed");
       setLoading(false);

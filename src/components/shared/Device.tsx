@@ -1,5 +1,3 @@
-import { PUBLIC_SERVER } from "../../utils/environment";
-import { dbHeader } from "../../utils/fetch";
 import { Panel } from "../Panel";
 import { socket } from "../../utils/socket";
 import { getCookie } from "../../utils/cookies";
@@ -60,26 +58,6 @@ export function Device({ info }: Props) {
               <h2 className="card-title">{info.displayname}</h2>
               <p>Added: {createddate.toDateString()}</p>
               <p>Initialized: {`${info.connected}`}</p>
-              {/* <div className="mt-5">
-                <a
-                  href={`/dashboard/device/${info.id}`}
-                  className="btn btn-primary w-full btn-sm"
-                >
-                  View
-                </a>
-                <button
-                  onClick={handleDownload}
-                  className="btn btn-secondary w-full my-2 btn-sm"
-                >
-                  Download Client
-                </button>
-                <button
-                  onClick={() => handleDelete(info.id)}
-                  className="btn btn-error w-full btn-sm"
-                >
-                  Delete
-                </button>
-              </div> */}
             </div>
           </div>
         </a>

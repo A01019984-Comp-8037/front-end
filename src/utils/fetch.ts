@@ -6,7 +6,7 @@ export const header = {
 
 export function dbHeader() {
   const token = getCookie("access_token");
-  if (!token) document.location.href = "/";
+  if (!token) window.location.href = "/";
   return {
     "content-type": "application/json",
     Authorization: `Bearer ${token}`,
