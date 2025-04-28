@@ -14,7 +14,6 @@ export function DeviceName({ name, id }: Props) {
 
   const updateName = async () => {
     const url = `${PUBLIC_SERVER}/devices/name?device=${id}&name=${nameInput}`;
-    console.log(url);
     const res = await fetch(url, {
       method: "PUT",
       headers: {

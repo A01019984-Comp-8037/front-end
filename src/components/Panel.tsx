@@ -7,7 +7,6 @@ interface Panel {
 export function Panel({ children }: Panel) {
   const [opacity, setOpacity] = useState("opacity-100");
   useEffect(() => {
-    // console.log("hi there");
     setOpacity("opacity-100");
   }, []);
 
