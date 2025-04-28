@@ -16,6 +16,9 @@ export function Header() {
         type: "alert-success",
         msg: "Device has been added, please complete setup",
       });
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1500);
     } else {
       sendAlert({
         type: "alert-error",
@@ -27,7 +30,9 @@ export function Header() {
   return (
     <div className="navbar bg-base-100 shadow-md">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">Remote Firewall Web App</a>
+        <a className="btn btn-ghost text-xl" href="/dashboard">
+          Remote Firewall Web App
+        </a>
       </div>
       <div className="navbar-end">
         <button onClick={addHandler} className="btn">

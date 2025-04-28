@@ -48,7 +48,9 @@ export function DeviceHeader({ id }: Props) {
   return (
     <div className="navbar bg-base-100 shadow-md">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">Remote Firewall Web App</a>
+        <a className="btn btn-ghost text-xl" href="/dashboard">
+          Remote Firewall Web App
+        </a>
       </div>
       <div className="navbar-end">
         <button className="btn mr-2 btn-primary w-24" onClick={handleDownload}>
